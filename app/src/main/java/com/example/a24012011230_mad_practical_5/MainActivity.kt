@@ -34,17 +34,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.a24012011230_mad_practical_5.ui.theme._24012011230_MAD_Practical5Theme
 
+import android.widget.Toast
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            _24012011230_MAD_Practical5Theme() {
+            _24012011230_MAD_Practical5Theme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    Box(modifier = Modifier.padding(innerPadding)) {
+                        LoginActivityUI(
+                            showMsg = { msg ->
+                                Toast.makeText(this@MainActivity, msg, Toast.LENGTH_SHORT).show()
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -83,10 +88,3 @@ fun ButtonDemo() {
     }
 }
 
-@Composable
-@Preview
-fun CheckboxDemo() {
-    Text(
-        text = "CheckboxDemo"
-    )
-}
