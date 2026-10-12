@@ -1,5 +1,7 @@
 package com.example.a24012011230_mad_practical_5
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,11 +30,27 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.a24012011230_mad_practical_5.ui.theme.Pink40
 import com.example.a24012011230_mad_practical_5.ui.theme._24012011230_MAD_Practical5Theme
 
 @Composable
-fun LoginActivityUI(showMsg: ((String) -> Unit)? = null) {
+fun LoginScreen(context: Context, navController: NavController) {
+    LoginActivityUI(
+        showMsg = { msg ->
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        },
+        onSignUpClick = {
+            navController.navigate("registration")
+        }
+    )
+}
+
+@Composable
+fun LoginActivityUI(
+    showMsg: ((String) -> Unit)? = null,
+    onSignUpClick: (() -> Unit)? = null
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -96,7 +114,7 @@ fun LoginActivityUI(showMsg: ((String) -> Unit)? = null) {
         ) {
             Text("Don't have an account?", fontSize = 16.sp)
             Spacer(modifier = Modifier.width(5.dp))
-            TextButton(onClick = { }) {
+            TextButton(onClick = { onSignUpClick?.invoke() }) {
                 Text(
                     text = "SIGN UP",
                     color = Pink40,
